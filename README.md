@@ -5,7 +5,7 @@
 [![Airtable](https://img.shields.io/badge/Airtable-Database-brightgreen)](https://airtable.com/)
 [![Automated](https://img.shields.io/badge/Fully-Automated-success)](https://github.com)
 
-> **Intelligent voice AI agent that automatically calls leads from Airtable, conducts personalized conversations, and sends appointment booking links via email and WhatsApp. Built with VAPI, n8n, and Calendly integration.**
+> **Intelligent voice AI agent that automatically calls leads from Airtable, conducts personalized conversations, and sends appointment booking links via email and phone. Built with VAPI, n8n, and Calendly integration.**
 
 Set it and forget it—your AI agent calls prospects every 4 minutes during business hours, qualifies leads, and books appointments automatically.
 
@@ -39,7 +39,7 @@ Set it and forget it—your AI agent calls prospects every 4 minutes during busi
 - 🤖 **AI-Powered Calls** - VAPI conducts human-like conversations
 - 📊 **Airtable Integration** - Manages leads and tracks call status
 - ⏰ **Scheduled Automation** - Calls leads every 4 minutes during business hours
-- 📧 **Multi-Channel Follow-up** - Email + WhatsApp with Calendly links
+- 📧 **Multi-Channel Follow-up** - Email + phone with Calendly links
 - 🎯 **Smart Lead Routing** - Handles phone validation and status updates
 - 📅 **Appointment Booking** - Direct integration with Calendly
 - 💬 **Personalized Messaging** - Uses prospect data for customized outreach
@@ -80,7 +80,7 @@ Set it and forget it—your AI agent calls prospects every 4 minutes during busi
 - Batch processing capability
 
 ### 📧 **Multi-Channel Follow-Up**
-- **WhatsApp/SMS** via Twilio
+- **Phone/SMS** via Twilio
 - **Email** via Gmail
 - Calendly booking links
 - Personalized messages
@@ -133,7 +133,7 @@ Prospect: "Email works!"
 [Call ends]
 
 11:07 AM - Email arrives with Calendly link
-11:07 AM - WhatsApp message with same link
+11:07 AM - Phone message with same link
 ```
 
 ### Business Owner Experience
@@ -179,7 +179,7 @@ Update Airtable Status → "Done"
      ↓
 Webhook Receives Tool Call
      ↓
-Send WhatsApp/SMS (Twilio)
+Send Phone/SMS (Twilio)
      ↓
 Send Email (Gmail)
      ↓
@@ -340,7 +340,7 @@ Return Response to VAPI
 │  TWILIO (SMS)    │          │   GMAIL (Email)  │
 ├──────────────────┤          ├──────────────────┤
 │                  │          │                  │
-│ Send WhatsApp:   │          │ Send Email:      │
+│ Send phone:   │          │ Send Email:      │
 │                  │          │                  │
 │ "Hello John,     │          │ Subject: Schedule│
 │ Here's your      │          │ Your Appointment │
@@ -357,7 +357,7 @@ Return Response to VAPI
 │  {                                                           │
 │    "results": [{                                            │
 │      "toolCallId": "...",                                   │
-│      "result": "📧 An email and a WhatsApp message have    │
+│      "result": "📧 An email and a phone message have    │
 │                 been sent with the Calendly link."          │
 │    }]                                                        │
 │  }                                                           │
@@ -395,7 +395,7 @@ Return Response to VAPI
 | **Automation** | n8n | Workflow orchestration |
 | **Voice AI** | VAPI | AI-powered phone calls |
 | **CRM** | Airtable | Lead database and tracking |
-| **SMS/WhatsApp** | Twilio | Multi-channel messaging |
+| **SMS/phone** | Twilio | Multi-channel messaging |
 | **Email** | Gmail | Email follow-ups |
 | **Scheduling** | Calendly | Appointment booking |
 | **Programming** | Python (n8n Code node) | Data formatting |
@@ -412,7 +412,7 @@ Return Response to VAPI
 | **n8n** | ✅ Yes | Run workflows | Free (self-hosted) or $20/mo |
 | **VAPI** | ✅ Yes | AI voice calls | $0.05-0.10/min |
 | **Airtable** | ✅ Yes | Lead database | Free or $20/mo (Pro) |
-| **Twilio** | ✅ Yes | WhatsApp/SMS | Pay-per-message (~$0.005-0.02) |
+| **Twilio** | ✅ Yes | phone/SMS | Pay-per-message (~$0.005-0.02) |
 | **Gmail** | ✅ Yes | Email sending | Free |
 | **Calendly** | ⚪ Optional | Appointment booking | Free or $10/mo |
 
@@ -536,7 +536,7 @@ If they're not interested, thank them and end the call politely.
 
 Name: `book_appointment`
 
-Description: `Books an appointment by sending Calendly link via email and WhatsApp`
+Description: `Books an appointment by sending Calendly link via email and phone`
 
 Parameters:
 ```json
@@ -619,13 +619,13 @@ To change:
 
 ---
 
-#### Update: Send WhatsApp/SMS (Twilio)
+#### Update: Send phone/SMS (Twilio)
 
-1. Click **"Send an SMS/MMS/WhatsApp message"** node
+1. Click **"Send an SMS/MMS/phone message"** node
 2. Add Twilio credential:
    - Account SID
    - Auth Token
-3. Update **From** number: Your Twilio WhatsApp number
+3. Update **From** number: Your Twilio phone number
 4. Customize message template
 
 ---
@@ -889,8 +889,8 @@ dict['company'] = item.json.get('companyName', '')
 - Triggered when prospect requests booking
 - Extracts customer info and preferences
 
-**8. Send an SMS/MMS/WhatsApp message (Twilio)**
-- Sends WhatsApp with Calendly link
+**8. Send an SMS/MMS/phone message (Twilio)**
+- Sends phone with Calendly link
 - Uses prospect's phone number
 - Branded message template
 
@@ -1031,16 +1031,16 @@ move_timeline: "3 months"
 
 ---
 
-### Issue: WhatsApp/SMS Not Sending
+### Issue: phone/SMS Not Sending
 
 **Symptoms:** Twilio messages fail
 
 **Solutions:**
 1. Verify Twilio credentials (SID + Auth Token)
-2. Check "From" number is WhatsApp-enabled
+2. Check "From" number is phone-enabled
 3. Ensure recipient number has correct format
 4. Verify Twilio account has credit
-5. Check WhatsApp opt-in requirements
+5. Check phone opt-in requirements
 
 ---
 
@@ -1173,7 +1173,7 @@ Not Interested → Declined (add this)
 
 **Twilio Costs:**
 - SMS: ~$0.0075 per message
-- WhatsApp: ~$0.005 per message
+- phone: ~$0.005 per message
 - 100 messages = $0.50-0.75
 
 **Total Monthly Cost (100 calls/day):**
@@ -1321,7 +1321,7 @@ Built with powerful tools:
 - [n8n](https://n8n.io) - Workflow automation
 - [VAPI](https://vapi.ai) - Voice AI platform
 - [Airtable](https://airtable.com) - Lead database
-- [Twilio](https://twilio.com) - WhatsApp/SMS
+- [Twilio](https://twilio.com) - phone/SMS
 - [Gmail](https://gmail.com) - Email delivery
 - [Calendly](https://calendly.com) - Appointment scheduling
 
